@@ -868,3 +868,21 @@ tr:last-child td {
     width: calc(100% - 12px);
   }
 }
+
+.cancel-form input {
+  background: #292c33;
+  color: #ffffff;
+  border: 1px solid #555b66;
+  caret-color: #ffffff;
+}
+
+.cancel-form input::placeholder {
+  color: #b9bdc5;
+  opacity: 1;
+}
+
+.cancel-form input:focus {
+  border-color: #ff788e;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 120, 142, 0.15);
+}
