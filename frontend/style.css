@@ -482,7 +482,6 @@ a {
 }
 .dialog-card input,
 .dialog-card textarea,
-.cancel-form input,
 .admin-form input,
 .admin-form textarea {
   width: 100%;
@@ -870,19 +869,23 @@ tr:last-child td {
 }
 
 .cancel-form input {
-  background: #292c33;
-  color: #ffffff;
-  border: 1px solid #555b66;
-  caret-color: #ffffff;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #292c33 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff;
+    border: 1px solid #555b66;
+    font-size: 14px;
 }
 
 .cancel-form input::placeholder {
-  color: #b9bdc5;
-  opacity: 1;
+    color: #b9bdc5 !important;
+    opacity: 1;
 }
 
 .cancel-form input:focus {
-  border-color: #ff788e;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 120, 142, 0.15);
+    outline: none;
+    border-color: #ff788e;
 }
