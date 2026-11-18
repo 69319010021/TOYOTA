@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e4002b">
+  <meta name="description" content="ระบบลงทะเบียนอบรม TOYOTA">
+  <title>TOYOTA | ระบบลงทะเบียนอบรม</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="TOYOTA Training หน้าแรก">
+      <span class="brand-mark">T</span>
+      <span><strong>TOYOTA</strong><small>TRAINING CENTER</small></span>
+    </a>
+    <nav class="nav-links" aria-label="เมนูหลัก">
+      <a href="#courses">รอบอบรม</a>
+      <a href="#cancel">ยกเลิกการลงทะเบียน</a>
+      <button class="button button-outline button-small" id="adminOpenBtn" type="button">ผู้ดูแลระบบ</button>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> TRAINING REGISTRATION</div>
+        <h1>พัฒนาความรู้<br><span>พร้อมก้าวไปข้างหน้า</span></h1>
+        <p>ค้นหารอบอบรมที่สนใจ ตรวจสอบที่นั่งว่าง และลงทะเบียนได้ง่าย ๆ ผ่านระบบออนไลน์</p>
+        <a class="button button-primary" href="#courses">ดูรอบอบรม <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-ring ring-one"></div><div class="art-ring ring-two"></div>
+        <div class="art-card"><span class="art-icon">✦</span><strong>LEARN</strong><small>GROW · IMPROVE · SUCCEED</small></div>
+        <span class="art-dot dot-one"></span><span class="art-dot dot-two"></span>
+      </div>
+    </section>
+
+    <section class="stats container" aria-label="ภาพรวมการอบรม">
+      <article class="stat-card"><span class="stat-icon red">▤</span><div><strong id="statCourses">—</strong><small>รอบอบรมทั้งหมด</small></div></article>
+      <article class="stat-card"><span class="stat-icon dark">♙</span><div><strong id="statRegistered">—</strong><small>ผู้ลงทะเบียน</small></div></article>
+      <article class="stat-card"><span class="stat-icon pale">✓</span><div><strong id="statSeats">—</strong><small>ที่นั่งว่างทั้งหมด</small></div></article>
+    </section>
+
+    <section class="section container" id="courses">
+      <div class="section-heading">
+        <div><div class="eyebrow">AVAILABLE PROGRAMS</div><h2>รอบอบรมที่เปิดรับสมัคร</h2><p>เลือกรอบอบรมที่เหมาะกับคุณ</p></div>
+        <button class="button button-outline" id="refreshBtn" type="button">↻ รีเฟรชข้อมูล</button>
+      </div>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <div id="courseGrid" class="course-grid">
+        <div class="loading-card">กำลังโหลดข้อมูลรอบอบรม…</div>
+      </div>
+      <div id="emptyState" class="empty-state" hidden><div class="empty-icon">▤</div><strong>ยังไม่มีรอบอบรม</strong><p>ขณะนี้ยังไม่มีรอบอบรมที่เปิดให้ลงทะเบียน</p></div>
+    </section>
+
+    <section class="cancel-section" id="cancel">
+      <div class="container cancel-layout">
+        <div><div class="eyebrow light">REGISTRATION MANAGEMENT</div><h2>ต้องการยกเลิกการอบรม?</h2><p>กรอกรหัสการลงทะเบียนและอีเมลเดียวกับที่ใช้สมัคร เพื่อยืนยันการยกเลิก</p></div>
+        <form id="cancelForm" class="cancel-form">
+          <label>รหัสการลงทะเบียน<input name="registration_id" required placeholder="วาง Registration ID" autocomplete="off"></label>
+          <label>อีเมลที่ใช้สมัคร<input name="email" type="email" required placeholder="name@example.com"></label>
+          <button class="button button-white" type="submit">ยกเลิกการลงทะเบียน</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container footer-inner"><div class="brand brand-footer"><span class="brand-mark">T</span><span><strong>TOYOTA</strong><small>TRAINING CENTER</small></span></div><span>ระบบลงทะเบียนอบรมออนไลน์</span><span>© <span id="year"></span> TOYOTA</span></div></footer>
+
+  <dialog id="registerDialog" class="dialog">
+    <form id="registerForm" class="dialog-card">
+      <button type="button" class="dialog-close" data-close="registerDialog" aria-label="ปิด">×</button>
+      <div class="eyebrow">REGISTRATION FORM</div>
+      <h2>ลงทะเบียนเข้าร่วมอบรม</h2>
+      <p id="selectedCourse" class="muted"></p>
+      <input type="hidden" name="session_id" required>
+      <label>ชื่อ-นามสกุล<input name="full_name" required maxlength="150" placeholder="กรอกชื่อ-นามสกุล"></label>
+      <label>อีเมล<input name="email" type="email" required maxlength="254" placeholder="name@example.com"></label>
+      <label>เบอร์โทรศัพท์<input name="phone" type="tel" required maxlength="30" placeholder="08XXXXXXXX"></label>
+      <div id="registerMessage" class="form-message" role="status" hidden></div>
+      <button class="button button-primary button-full" type="submit">ยืนยันการลงทะเบียน</button>
+      <p class="fine-print">กรุณาตรวจสอบข้อมูลก่อนกดยืนยัน</p>
+    </form>
+  </dialog>
+
+  <dialog id="successDialog" class="dialog">
+    <div class="dialog-card success-card">
+      <button type="button" class="dialog-close" data-close="successDialog" aria-label="ปิด">×</button>
+      <div class="success-check">✓</div><h2>ลงทะเบียนสำเร็จ</h2><p>บันทึกข้อมูลของคุณเรียบร้อยแล้ว กรุณาเก็บรหัสนี้ไว้สำหรับการยกเลิก</p>
+      <div class="registration-code"><small>REGISTRATION ID</small><strong id="registrationCode"></strong><button type="button" id="copyIdBtn" class="button button-outline button-small">คัดลอกรหัส</button></div>
+      <button type="button" class="button button-primary button-full" data-close="successDialog">เสร็จสิ้น</button>
+    </div>
+  </dialog>
+
+  <dialog id="adminDialog" class="dialog dialog-wide">
+    <div class="dialog-card admin-card">
+      <button type="button" class="dialog-close" data-close="adminDialog" aria-label="ปิด">×</button>
+      <div class="eyebrow">ADMINISTRATION</div><h2>จัดการระบบอบรม</h2>
+      <div id="adminLogin">
+        <p class="muted">เข้าสู่ระบบด้วยรหัสผู้ดูแลที่ตั้งไว้ใน Render Environment Variables</p>
+        <label>รหัสผู้ดูแล<input id="adminTokenInput" type="password" autocomplete="current-password" placeholder="ADMIN_TOKEN"></label>
+        <button type="button" class="button button-primary" id="adminLoginBtn">เข้าสู่ระบบ</button>
+      </div>
+      <div id="adminPanel" hidden>
+        <div class="admin-toolbar"><h3>เพิ่มรอบอบรม</h3><button class="button button-outline button-small" id="adminLogoutBtn" type="button">ออกจากระบบ</button></div>
+        <form id="sessionForm" class="admin-form">
+          <label>ชื่อหลักสูตร<input name="title" required maxlength="200" placeholder="ชื่อหลักสูตร"></label>
+          <label>วันที่อบรม<input name="training_date" type="date" required></label>
+          <label>สถานที่<input name="location" required maxlength="200" placeholder="สถานที่อบรม"></label>
+          <label>จำนวนที่นั่ง<input name="capacity" type="number" min="1" max="10000" required value="20"></label>
+          <label class="span-two">รายละเอียด<textarea name="description" rows="2" placeholder="รายละเอียดหลักสูตร"></textarea></label>
+          <button class="button button-primary span-two" type="submit">+ เพิ่มรอบอบรม</button>
+        </form>
+        <div class="admin-toolbar"><h3>รายชื่อการลงทะเบียน</h3><button class="button button-outline button-small" id="adminRefreshBtn" type="button">รีเฟรช</button></div>
+        <div id="adminMessage" class="notice" role="status" hidden></div>
+        <div class="table-wrap"><table><thead><tr><th>ผู้เข้าอบรม</th><th>หลักสูตร</th><th>วันที่</th><th>สถานะ</th><th>การจัดการ</th></tr></thead><tbody id="registrationsTable"><tr><td colspan="5">ยังไม่มีข้อมูล</td></tr></tbody></table></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/static/script.js" defer></script>
+</body>
+</html>
